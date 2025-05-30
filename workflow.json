@@ -1,0 +1,312 @@
+{
+  "_workflow_info": {
+    "title": "🚀 CLEAN NEW MASKING WORKFLOW",
+    "description": "Simplified workflow using ONLY the new masking logic from mask/ folder",
+    "changes": [
+      "✅ Uses CXH_NEW_Advanced_Mask_Generator with new masking logic",
+      "✅ Uses CXH_NEW_Advanced_Pose_Preprocessor with enhanced pose detection",
+      "✅ Simplified to use only standard ComfyUI nodes + new masking nodes",
+      "✅ No external dependencies required"
+    ]
+  },
+  "last_node_id": 8,
+  "last_link_id": 10,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [100, 100],
+      "size": [320, 314],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [1, 2]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "model_image.jpg",
+        "image"
+      ],
+      "title": "Load Model Image"
+    },
+    {
+      "id": 2,
+      "type": "LoadImage", 
+      "pos": [100, 450],
+      "size": [320, 314],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [3]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "garment_image.jpg",
+        "image"
+      ],
+      "title": "Load Garment Image"
+    },
+    {
+      "id": 3,
+      "type": "CXH_NEW_Advanced_Mask_Generator",
+      "pos": [500, 100],
+      "size": [400, 600],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [4]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CXH_NEW_Advanced_Mask_Generator"
+      },
+      "widgets_values": [
+        "full",
+        "cuda",
+        768,
+        15,
+        0,
+        9,
+        3,
+        5,
+        1,
+        5,
+        2,
+        0,
+        0,
+        0,
+        0,
+        false,
+        true,
+        false,
+        true
+      ],
+      "_meta": {
+        "title": "🚀 NEW Advanced Mask Generator",
+        "description": "Uses new masking logic from mask/ folder",
+        "mask_types": ["full", "upper", "lower"]
+      },
+      "title": "🚀 NEW Mask Generator"
+    },
+    {
+      "id": 4,
+      "type": "CXH_NEW_Advanced_Pose_Preprocessor",
+      "pos": [500, 750],
+      "size": [315, 106],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pose_image",
+          "type": "IMAGE",
+          "links": [5]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CXH_NEW_Advanced_Pose_Preprocessor"
+      },
+      "widgets_values": [
+        "cuda",
+        512,
+        true,
+        false
+      ],
+      "_meta": {
+        "title": "🚀 NEW Advanced Pose Preprocessor",
+        "description": "Uses enhanced DWPose detection from mask/ folder"
+      },
+      "title": "🚀 NEW Pose Preprocessor"
+    },
+    {
+      "id": 5,
+      "type": "CXH_Leffa_Viton_Load",
+      "pos": [950, 100],
+      "size": [315, 82],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "CXH_Leffa_Viton_Load",
+          "links": [6]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CXH_Leffa_Viton_Load"
+      },
+      "widgets_values": [
+        "franciszzj/Leffa",
+        "hd"
+      ],
+      "title": "Load Leffa Model"
+    },
+    {
+      "id": 6,
+      "type": "CXH_Leffa_Viton_Run",
+      "pos": [950, 250],
+      "size": [315, 210],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "CXH_Leffa_Viton_Load",
+          "link": 6
+        },
+        {
+          "name": "model",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "cloth",
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "name": "pose",
+          "type": "IMAGE",
+          "link": 5
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [8]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CXH_Leffa_Viton_Run"
+      },
+      "widgets_values": [
+        20,
+        2.5,
+        656545
+      ],
+      "title": "Run Virtual Try-On"
+    },
+    {
+      "id": 7,
+      "type": "ImageScale",
+      "pos": [500, 900],
+      "size": [315, 130],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [7]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ImageScale"
+      },
+      "widgets_values": [
+        "lanczos",
+        768,
+        1024,
+        "disabled"
+      ],
+      "title": "Scale Model Image"
+    },
+    {
+      "id": 8,
+      "type": "PreviewImage",
+      "pos": [1300, 250],
+      "size": [210, 246],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 8
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": [],
+      "title": "Preview Result"
+    }
+  ],
+  "links": [
+    [1, 1, 0, 3, 0, "IMAGE"],
+    [2, 1, 0, 4, 0, "IMAGE"],
+    [3, 2, 0, 6, 2, "IMAGE"],
+    [4, 3, 0, 6, 4, "MASK"],
+    [5, 4, 0, 6, 3, "IMAGE"],
+    [6, 5, 0, 6, 0, "CXH_Leffa_Viton_Load"],
+    [7, 7, 0, 6, 1, "IMAGE"],
+    [8, 6, 0, 8, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

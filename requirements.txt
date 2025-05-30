@@ -30,3 +30,20 @@ tqdm
 # transformers
 #triton
 cloudpickle
+
+# Additional dependencies for Leffa ComfyUI node
+# Uncomment these if not already installed in your ComfyUI environment:
+# torch>=2.0.0
+# torchvision>=0.15.0
+# transformers>=4.30.0
+diffusers>=0.21.0
+xformers>=0.0.20
+huggingface_hub>=0.16.0
+
+# ONNX Runtime for human parsing and pose detection
+# Choose one based on your system:
+onnxruntime-gpu>=1.15.0  # For CUDA-enabled systems
+# onnxruntime>=1.15.0    # For CPU-only systems
+
+# Additional image processing dependencies
+opencv-contrib-python>=4.8.0  # Enhanced OpenCV with additional features
