@@ -1,0 +1,99 @@
+{
+  "_workflow_info": {
+    "title": "Leffa Virtual Try-On API Workflow - External Masks",
+    "description": "API-compatible workflow for Modal deployment using external masks",
+    "version": "2.0"
+  },
+  "1": {
+    "inputs": {
+      "image": "model_image.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Model Image"
+    }
+  },
+  "2": {
+    "inputs": {
+      "image": "garment_image.jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Garment Image"
+    }
+  },
+  "3": {
+    "inputs": {
+      "image": "mask_image.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load External Mask Image"
+    }
+  },
+  "4": {
+    "inputs": {
+      "image": ["1", 0],
+      "device": "cuda",
+      "target_size": 512,
+      "include_hands": true,
+      "include_face": false
+    },
+    "class_type": "CXH_NEW_Advanced_Pose_Preprocessor",
+    "_meta": {
+      "title": "NEW Advanced Pose Preprocessor"
+    }
+  },
+  "5": {
+    "inputs": {
+      "model": "franciszzj/Leffa",
+      "viton_type": "hd"
+    },
+    "class_type": "CXH_Leffa_Viton_Load",
+    "_meta": {
+      "title": "Load Leffa Model"
+    }
+  },
+  "6": {
+    "inputs": {
+      "pipe": ["5", 0],
+      "model": ["7", 0],
+      "cloth": ["2", 0],
+      "pose": ["4", 0],
+      "mask": ["3", 0],
+      "steps": 20,
+      "cfg": 2.5,
+      "seed": 656545
+    },
+    "class_type": "CXH_Leffa_Viton_Run",
+    "_meta": {
+      "title": "Run Virtual Try-On with External Mask"
+    }
+  },
+  "7": {
+    "inputs": {
+      "image": ["1", 0],
+      "upscale_method": "lanczos",
+      "width": 768,
+      "height": 1024,
+      "crop": "disabled"
+    },
+    "class_type": "ImageScale",
+    "_meta": {
+      "title": "Scale Model Image"
+    }
+  },
+  "8": {
+    "inputs": {
+      "filename_prefix": "leffa_output",
+      "images": ["6", 0]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Result"
+    }
+  }
+}

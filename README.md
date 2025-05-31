@@ -68,6 +68,25 @@ Leffa/
 
 ## Usage
 
+### 🎭 Standalone CLI (Recommended)
+
+**NEW: Working CLI Available!** Use the standalone CLI for direct virtual try-on without ComfyUI:
+
+```bash
+# Quick start with predefined masks
+python standalone_cli_tryon.py \
+  --user-image person.jpg \
+  --garment-image shirt.jpg \
+  --mask-type upper
+
+# Show all options
+python standalone_cli_tryon.py --help
+```
+
+📖 **Full CLI Documentation**: See [CLI_README.md](CLI_README.md) and [USAGE_EXAMPLES.md](USAGE_EXAMPLES.md)
+
+### ComfyUI Nodes
+
 1. **Load Model**: Use the `CXH_Leffa_Viton_Load` node to load the model
    - Select model: `franciszzj/Leffa`
    - Choose type: `hd` (high definition) or `dc` (dress code)

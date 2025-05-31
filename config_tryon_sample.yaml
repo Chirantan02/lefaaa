@@ -1,0 +1,47 @@
+advanced:
+  enable_memory_efficient_attention: true
+  interpolation: bilinear
+  pose_include_face: false
+  pose_include_hands: true
+  pose_target_size: 512
+  resize_method: lanczos
+  use_half_precision: false
+examples:
+  fast_mode:
+    cfg: 2.0
+    skip_pose: true
+    steps: 15
+  high_quality:
+    cfg: 3.5
+    skip_pose: false
+    steps: 30
+  lower_body:
+    cfg: 3.0
+    mask_image: https://storage.googleapis.com/mask_images/lower_mask.png
+    steps: 25
+    viton_type: dc
+  upper_body:
+    cfg: 2.5
+    mask_image: https://storage.googleapis.com/mask_images/upper_mask.png
+    steps: 20
+    viton_type: hd
+inference:
+  cfg: 2.5
+  seed: null
+  steps: 20
+mask_urls:
+  full: https://storage.googleapis.com/mask_images/upper_mask.png
+  lower: https://storage.googleapis.com/mask_images/lower_mask.png
+  upper: https://storage.googleapis.com/mask_images/upper_mask.png
+model:
+  device: auto
+  path: franciszzj/Leffa
+  viton_type: hd
+paths:
+  garment_image: ''
+  mask_image: ''
+  output: output_tryon.png
+  user_image: ''
+processing:
+  skip_pose: false
+  target_size: 768
