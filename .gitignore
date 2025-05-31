@@ -1,3 +1,5 @@
+ai-wardrobe-stylist-7311f-firebase-adminsdk-fbsvc-68770d3451.json
+
 # Model files - exclude large model files to avoid LFS issues
 *.bin
 *.safetensors
